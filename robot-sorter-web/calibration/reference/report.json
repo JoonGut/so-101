@@ -1,0 +1,234 @@
+{
+ "reference_from": [
+  "ds_222af1cc33",
+  "ds_22c3923215",
+  "ds_284049b227",
+  "ds_2ced175dab",
+  "ds_2d60a660ee",
+  "ds_598fc72a6f",
+  "ds_5aaeb8f8a7",
+  "ds_625d6f5cdc",
+  "ds_70cf117d09",
+  "ds_7efe7a0710",
+  "ds_7fed44ee57",
+  "ds_9d6fee104c",
+  "ds_a3bea63467",
+  "ds_a4479088a6",
+  "ds_a555588281",
+  "ds_b325a6c98f",
+  "ds_b7365ff209",
+  "ds_bec0220f96",
+  "ds_e3611364c0"
+ ],
+ "sessions": {
+  "ds_222af1cc33": {
+   "episodes": 20,
+   "shift": {
+    "dx": 4.4,
+    "dy": -2.4,
+    "angle": 0.54,
+    "scale": 0.983,
+    "inliers": 38,
+    "matches": 106
+   }
+  },
+  "ds_22c3923215": {
+   "episodes": 20,
+   "shift": {
+    "dx": -0.4,
+    "dy": -0.1,
+    "angle": 0.05,
+    "scale": 0.999,
+    "inliers": 66,
+    "matches": 113
+   }
+  },
+  "ds_284049b227": {
+   "episodes": 13,
+   "shift": {
+    "dx": -0.0,
+    "dy": 0.5,
+    "angle": 0.09,
+    "scale": 1.0,
+    "inliers": 58,
+    "matches": 122
+   }
+  },
+  "ds_2ced175dab": {
+   "episodes": 20,
+   "shift": {
+    "dx": -0.5,
+    "dy": -0.3,
+    "angle": 0.07,
+    "scale": 1.001,
+    "inliers": 62,
+    "matches": 115
+   }
+  },
+  "ds_2d60a660ee": {
+   "episodes": 20,
+   "shift": {
+    "dx": -0.6,
+    "dy": -0.0,
+    "angle": 0.03,
+    "scale": 1.0,
+    "inliers": 51,
+    "matches": 115
+   }
+  },
+  "ds_598fc72a6f": {
+   "episodes": 25,
+   "shift": {
+    "dx": -1.2,
+    "dy": -3.1,
+    "angle": -0.09,
+    "scale": 1.005,
+    "inliers": 49,
+    "matches": 110
+   }
+  },
+  "ds_5aaeb8f8a7": {
+   "episodes": 20,
+   "shift": {
+    "dx": 0.7,
+    "dy": 0.2,
+    "angle": 0.06,
+    "scale": 0.998,
+    "inliers": 51,
+    "matches": 123
+   }
+  },
+  "ds_625d6f5cdc": {
+   "episodes": 20,
+   "shift": {
+    "dx": 0.2,
+    "dy": -0.2,
+    "angle": 0.12,
+    "scale": 1.0,
+    "inliers": 62,
+    "matches": 119
+   }
+  },
+  "ds_70cf117d09": {
+   "episodes": 25,
+   "shift": {
+    "dx": -0.0,
+    "dy": -2.5,
+    "angle": -0.03,
+    "scale": 1.003,
+    "inliers": 42,
+    "matches": 109
+   }
+  },
+  "ds_7efe7a0710": {
+   "episodes": 20,
+   "shift": {
+    "dx": -3.1,
+    "dy": 2.8,
+    "angle": -0.97,
+    "scale": 1.013,
+    "inliers": 32,
+    "matches": 91
+   }
+  },
+  "ds_7fed44ee57": {
+   "episodes": 25,
+   "shift": {
+    "dx": 0.5,
+    "dy": -2.1,
+    "angle": -0.13,
+    "scale": 1.0,
+    "inliers": 47,
+    "matches": 107
+   }
+  },
+  "ds_9d6fee104c": {
+   "episodes": 4,
+   "shift": {
+    "dx": -0.3,
+    "dy": -0.0,
+    "angle": -0.01,
+    "scale": 1.0,
+    "inliers": 65,
+    "matches": 129
+   }
+  },
+  "ds_a3bea63467": {
+   "episodes": 45,
+   "shift": {
+    "dx": 0.9,
+    "dy": 4.0,
+    "angle": -0.27,
+    "scale": 0.998,
+    "inliers": 40,
+    "matches": 99
+   }
+  },
+  "ds_a4479088a6": {
+   "episodes": 45,
+   "shift": {
+    "dx": -0.6,
+    "dy": 1.7,
+    "angle": 0.11,
+    "scale": 1.003,
+    "inliers": 38,
+    "matches": 106
+   }
+  },
+  "ds_a555588281": {
+   "episodes": 75,
+   "shift": {
+    "dx": -1.1,
+    "dy": -1.6,
+    "angle": -0.38,
+    "scale": 1.002,
+    "inliers": 60,
+    "matches": 103
+   }
+  },
+  "ds_b325a6c98f": {
+   "episodes": 20,
+   "shift": {
+    "dx": 0.1,
+    "dy": 0.6,
+    "angle": -0.02,
+    "scale": 1.001,
+    "inliers": 70,
+    "matches": 120
+   }
+  },
+  "ds_b7365ff209": {
+   "episodes": 3,
+   "shift": {
+    "dx": -0.3,
+    "dy": -0.2,
+    "angle": 0.11,
+    "scale": 1.0,
+    "inliers": 54,
+    "matches": 130
+   }
+  },
+  "ds_bec0220f96": {
+   "episodes": 25,
+   "shift": {
+    "dx": 0.8,
+    "dy": -1.6,
+    "angle": -0.13,
+    "scale": 1.0,
+    "inliers": 45,
+    "matches": 128
+   }
+  },
+  "ds_e3611364c0": {
+   "episodes": 45,
+   "shift": {
+    "dx": -1.4,
+    "dy": -2.3,
+    "angle": -0.06,
+    "scale": 1.001,
+    "inliers": 53,
+    "matches": 110
+   }
+  }
+ }
+}

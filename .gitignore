@@ -1,0 +1,10 @@
+# Pesados: no caben en git (ver README / MIGRACION.md para llevarlos aparte)
+robot-sorter-web/models/
+robot-sorter-web/data/
+# Se regeneran solos
+.venv/
+.firefox-camera-profile/
+__pycache__/
+*.pyc
+# Configuración local de cada portátil (puertos, cámaras)
+.env

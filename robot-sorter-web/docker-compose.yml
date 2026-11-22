@@ -1,0 +1,9 @@
+services:
+  robot-sorter:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./calibration:/app/data/calibration
+      - ./models:/app/data/models
+    restart: unless-stopped

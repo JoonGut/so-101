@@ -1,0 +1,12 @@
+# Da acceso a la GPU NVIDIA al contenedor para que el modelo entrenado corra en ella.
+# Requiere NVIDIA Container Toolkit en el ordenador (ver README).
+# docker compose -f docker-compose.yml -f docker-compose.robot.yml -f docker-compose.gpu.yml up -d --build
+services:
+  robot-sorter:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

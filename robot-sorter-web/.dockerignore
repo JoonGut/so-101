@@ -1,0 +1,7 @@
+data/
+models/
+calibration/
+old_ui/
+.firefox-camera-profile/
+robot-sorter-web (3)/
+*.zip

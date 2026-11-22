@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101316">
+  <title>SO-101 · Recogida de residuos</title>
+  <link rel="stylesheet" href="/static/css/station.css">
+</head>
+<body>
+  <header class="topbar">
+    <strong class="brand">SO-101 <span>Recogida de residuos</span></strong>
+    <span class="connection"><span id="server-dot" class="dot"></span><span id="server-text">Conectando…</span></span>
+  </header>
+
+  <main class="layout">
+    <!-- Cámaras: en directo o, mientras trabaja el modelo, lo que ve el modelo -->
+    <section class="cameras" aria-label="Cámaras">
+      <figure id="cam-front" class="cam cam-main">
+        <video autoplay playsinline muted hidden></video>
+        <canvas width="640" height="480" aria-label="Cámara frontal"></canvas>
+        <img class="preview" alt="Cámara frontal vista por el modelo" hidden>
+        <figcaption><span>Frontal</span><span class="badge">Conectando…</span></figcaption>
+        <div class="detection" hidden>Objeto en la mesa</div>
+      </figure>
+      <figure id="cam-wrist" class="cam">
+        <video autoplay playsinline muted hidden></video>
+        <canvas width="640" height="480" aria-label="Cámara de la pinza"></canvas>
+        <img class="preview" alt="Cámara de la pinza vista por el modelo" hidden>
+        <figcaption><span>Pinza</span><span class="badge">Conectando…</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="steps" aria-label="Pasos">
+      <!-- 1 -->
+      <article class="step" aria-labelledby="step1-title">
+        <h2 id="step1-title"><span class="num">1</span>Calibrar la mesa vacía</h2>
+        <p class="hint">Quita todo de la mesa, deja el brazo en reposo y pulsa el botón.</p>
+        <button id="btn-calibrate" disabled>Calibrar mesa vacía</button>
+        <p id="calibrate-status" class="status" role="status">Esperando a la cámara frontal…</p>
+        <details id="align" class="align">
+          <summary>Alinear la cámara con las grabaciones</summary>
+          <p class="hint">Se superpone cómo veía la cámara la mesa al grabar. Mueve la cámara frontal hasta que la alfombrilla, los cubos y las cintas coincidan.</p>
+          <label class="slider">
+            <span>Transparencia de la referencia <output id="out-align">50 %</output></span>
+            <input id="in-align" type="range" min="0" max="1" step="0.05" value="0.5">
+          </label>
+          <p id="align-status" class="status" role="status"></p>
+        </details>
+      </article>
+
+      <!-- 2 -->
+      <article class="step" aria-labelledby="step2-title">
+        <h2 id="step2-title"><span class="num">2</span>Elegir el modelo</h2>
+        <ul id="model-list" class="model-list"></ul>
+        <details class="upload">
+          <summary>Subir un modelo (.zip)</summary>
+          <form id="upload-form">
+            <input id="upload-file" type="file" accept=".zip,application/zip" required aria-label="Archivo .zip del modelo">
+            <input id="upload-name" maxlength="80" placeholder="Nombre (opcional)" aria-label="Nombre del modelo">
+            <button id="upload-btn" type="submit">Subir</button>
+          </form>
+          <progress id="upload-progress" max="100" value="0" hidden></progress>
+          <p class="hint">Carpeta <code>pretrained_model</code> de LeRobot (o un checkpoint completo) con cámaras <code>front</code>/<code>gripper</code> y 6 articulaciones.</p>
+        </details>
+        <p id="model-status" class="status" role="status"></p>
+      </article>
+
+      <!-- 3 -->
+      <article class="step" aria-labelledby="step3-title">
+        <h2 id="step3-title"><span class="num">3</span>Recoger basura</h2>
+        <label class="check auto-row">
+          <input id="run-auto" type="checkbox">
+          <span><strong>Automático:</strong> la cámara de arriba mira la mesa, elige la instrucción y el brazo recoge. Si no hay nada, se queda quieto. Al terminar vuelve a la base y espera a la siguiente.</span>
+        </label>
+        <div id="auto-panel" class="auto-panel" hidden>
+          <div class="auto-now"><span id="auto-phase">—</span><strong id="auto-instruction"></strong></div>
+          <div id="auto-detail" class="auto-detail"></div>
+        </div>
+        <div class="run-row">
+          <button id="btn-play" class="play" disabled>▶ Empezar</button>
+          <button id="btn-stop" class="stop" disabled>■ Parar y volver</button>
+          <label class="duration">Durante
+            <select id="run-duration">
+              <option value="30">30 s</option>
+              <option value="60" selected>1 min</option>
+              <option value="120">2 min</option>
+              <option value="300">5 min</option>
+              <option value="3600">Sin límite (1 h)</option>
+            </select>
+          </label>
+        </div>
+        <label id="task-row" class="task" hidden>Instrucción para el VLA
+          <input id="run-task" maxlength="120" value="lata-papel-plastico" list="task-options">
+          <datalist id="task-options">
+            <option value="lata-papel-plastico"></option>
+            <option value="papel-lata-plastico"></option>
+            <option value="lata con los recipientes llenos"></option>
+          </datalist>
+        </label>
+        <p id="run-status" class="status" role="status">Comprobando…</p>
+        <details class="log"><summary>Registro</summary><pre id="run-log"></pre></details>
+        <button id="btn-estop" class="estop" disabled>Parada de emergencia</button>
+      </article>
+
+      <!-- 4 -->
+      <article class="step" aria-labelledby="step4-title">
+        <h2 id="step4-title"><span class="num">4</span>Ajustar el movimiento</h2>
+        <p class="hint">Se aplica al momento, también mientras recoge.</p>
+        <label class="slider">
+          <span>Velocidad <output id="out-speed"></output></span>
+          <input id="in-speed" data-key="speed_factor" type="range" min="0.2" max="2" step="0.1">
+          <small><span>Lenta</span><span>Rápida</span></small>
+        </label>
+        <label class="slider">
+          <span>Suavidad <output id="out-smooth"></output></span>
+          <input id="in-smooth" data-key="smoothness_factor" type="range" min="1" max="10" step="1">
+          <small><span>Directa</span><span>Muy suave</span></small>
+        </label>
+        <label class="slider">
+          <span>Aceleración <output id="out-accel"></output></span>
+          <input id="in-accel" data-key="max_acceleration" type="range" min="0.5" max="5" step="0.5">
+          <small><span>Prudente</span><span>Ágil</span></small>
+        </label>
+        <label class="slider">
+          <span>Corrección de la base <output id="out-pan"></output></span>
+          <input id="in-pan" data-key="pan_offset" type="range" min="-15" max="15" step="0.5">
+          <small><span>← Derecha</span><span>Izquierda →</span></small>
+        </label>
+        <label class="check">
+          <input id="in-auto" type="checkbox">
+          <span>Ayudas (desactivadas = el brazo hace exactamente lo que aprendió): si falla un agarre, vuelve al inicio y reintenta probando otra corrección de la base.</span>
+        </label>
+        <button id="btn-defaults" class="secondary">Restablecer valores</button>
+      </article>
+    </section>
+  </main>
+
+  <script src="/static/js/vision.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

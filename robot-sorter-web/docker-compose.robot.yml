@@ -1,0 +1,21 @@
+# Linux: añade este archivo al Compose para dar acceso al robot, las cámaras y el modelo.
+# docker compose -f docker-compose.yml -f docker-compose.robot.yml up -d --build
+services:
+  robot-sorter:
+    devices:
+      # Puertos serie del follower y del leader (en la web se elige cuál usar).
+      - "${ROBOT_PORT:-/dev/ttyACM0}:/dev/ttyACM0"
+      - "${ROBOT_PORT_2:-/dev/ttyACM1}:/dev/ttyACM1"
+    # Cámaras: se ve el /dev real del ordenador en /hostdev y se permite cualquier cámara (major 81).
+    # Así, si una cámara USB se desconecta y vuelve como otro /dev/videoN (pasa con el cable de la
+    # pinza al moverse el brazo), su nombre by-id apunta al dispositivo nuevo y se puede reabrir
+    # sin recrear el contenedor. Tampoco impide arrancar si falta una cámara.
+    device_cgroup_rules:
+      - "c 81:* rmw"
+    environment:
+      POLICY_CAMERA_FRONT: "/hostdev/v4l/by-id/${CAMERA_FRONT_ID:-usb-Wed_Camera_Wed_Camera_20240420112206-video-index0}"
+      POLICY_CAMERA_GRIPPER: "/hostdev/v4l/by-id/${CAMERA_GRIPPER_ID:-usb-Sonix_Technology_Co.__Ltd._USB2.0_CAM1_USB2.0_CAM1-video-index0}"
+    volumes:
+      - "/dev:/hostdev:ro"
+      # Política ACT entrenada (exportada desde SenseCraft), solo lectura.
+      - "${POLICY_DIR:-${HOME}/.config/SenseCraft Robotics/backend-storage/projects/proj_7cacd95f/models/model_import_996690c2/bundle/checkpoints/last/pretrained_model}:/app/models/act:ro"
